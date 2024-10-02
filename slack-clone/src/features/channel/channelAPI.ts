@@ -1,4 +1,4 @@
-import { getFirestore, query, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, query, collection, onSnapshot, Timestamp, addDoc } from 'firebase/firestore';
 import { firebaseApp } from '../../firebase/firebaseConfig';
 import { Channel, ChannelRef } from '../../types/Channel';
 
@@ -23,4 +23,15 @@ export const subscribeChannels = (onChannelsUpdated: (channels: ChannelRef[]) =>
       console.error('Failed to subscribe channels:', error);
     }
   );
+};
+export const postChannel = async (channel: Channel) => {
+  await addDoc(collection(db, 'channels'), channel);
+};
+
+export const createChannel = (name: string): Channel => {
+  const timestamp = Timestamp.fromDate(new Date());
+  return {
+    name: name,
+    create_at: timestamp,
+  };
 };
