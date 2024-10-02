@@ -3,6 +3,7 @@ import { Home, ChatBubble } from '@mui/icons-material';
 import { useAppSelector } from '../app/hooks';
 import { getUser } from '../features/user/userAPI';
 import { User } from '../types/User';
+import { signOut } from '../features/auth/Auth';
 
 const SideBar = () => {
   const userId = useAppSelector((state) => state.user.userId);
@@ -37,7 +38,7 @@ const SideBar = () => {
       </div>
       <div className="py-5 mt-auto mx-2 flex flex-col items-center">
         <div className="bg-gray-700 p-2 rounded-lg">
-          <img src={'/default-user-icon.webp'} alt="" />
+          <img src={user?.profile_picture || '/default-user-icon.webp'} alt="" onClick={() => signOut()} />
         </div>
         <span className="text-xs">{user?.displayName}</span>
       </div>
